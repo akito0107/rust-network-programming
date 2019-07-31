@@ -9,11 +9,10 @@ pub fn communicate(address: &str) -> Result<(), failure::Error> {
         socket.send_to(input.as_bytes(), address)?;
 
         let mut buffer = [0u8; 1024];
+        socket.recv_from(&mut buffer).expect("failed ot recieve");
         print!(
             "{}",
-            socket
-                .recv_from(&buffer)
-                .expect("failed to convert to String")
-        );
+            str::from_utf8(&buffer).expect("failed to convert to String")
+        )
     }
 }
