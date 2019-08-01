@@ -50,8 +50,12 @@ fn main() {
             Ok(frame) => {
                 let frame = EthernetPacket::new(frame).unwrap();
                 match frame.get_ethertype() {
-                    EtherTypes::Ipv4 => {}
-                    EtherTypes::Ipv6 => {}
+                    EtherTypes::Ipv4 => {
+                        ipv4_handler(&frame);
+                    }
+                    EtherTypes::Ipv6 => {
+                        ipv6_handler(&frame);
+                    }
                     _ => {
                         info!("Not an IPv4 or IPv6 packet");
                     }
